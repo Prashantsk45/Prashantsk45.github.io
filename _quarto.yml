@@ -1,0 +1,33 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Prashant"
+  site-url: https://Prashantsk45.github.io/
+  reader-mode: true
+  
+  navbar:
+    background: light
+    right:
+      - projects.qmd
+      - about.qmd
+      - icon: linkedin
+        href: https://linkedin.com/in/prashant-kamble272
+      - icon: github 
+        href: "https://github.com/Prashantsk45"
+        
+  page-footer: 
+    left: © 2026 Prashant Kamble. Made with ❤️ and [Quarto](https://quarto.org/)
+    right: 
+      - icon: linkedin
+        href: https://linkedin.com/in/prashant-kamble272
+      - icon: github 
+        href: https://github.com/Prashantsk45"
+
+
+format:
+  html:
+    theme: lux
+    css: styles.css
+    toc: true

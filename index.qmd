@@ -1,0 +1,14 @@
+---
+title: Prashant's Portfolio & Blog
+subtitle: Hi! I am Prashant Kamble, an Aerospace Engineering Graduate passionate about Aircraft Design, CFD, FEA, and Aerospace Data Science.
+pagetitle: "Prashant Kamble"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+page-layout: full
+title-block-banner: "#FFF0DC"
+title-block-banner-color: body
+---
+

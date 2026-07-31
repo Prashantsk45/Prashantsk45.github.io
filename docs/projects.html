@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Prashant Kamble</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+  <div class="shooting-star shooting-star-1"></div>
+  <div class="shooting-star shooting-star-2"></div>
+  <div class="shooting-star shooting-star-3"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">PRASHANT<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="about.html">About Me</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="https://linkedin.com/in/prashant-kamble272" target="_blank"><i class="bi bi-linkedin"></i></a>
+      <a href="https://github.com/Prashantsk45" target="_blank"><i class="bi bi-github"></i></a>
+    </div>
+  </nav>
+
+  <!-- Projects Gallery Header -->
+  <section class="container" style="padding-bottom: 0;">
+    <div class="projects-header">
+      <h1 class="projects-title">Featured Work</h1>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="data-science">Data Science</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Grid -->
+  <section class="container" style="padding-top: 0;">
+    <div class="projects-grid">
+      <!-- Project Card 1: Space Race -->
+      <div class="project-card" data-category="data-science">
+        <div class="project-thumb">
+          <img src="projects/falcon9_landing_analysis/Slide1.PNG" alt="SpaceX Falcon 9 Landing Success Prediction">
+        </div>
+        <div class="project-content">
+          <div class="project-tags">
+            <span class="tag">Data Science</span>
+          </div>
+          <h3 class="project-card-title">Winning Space Race with Data Science</h3>
+          <p class="project-desc">
+            An end-to-end data science pipeline built to predict the landing success of the Falcon 9 first-stage booster, modeling rocket launch economics and estimating cost savings from booster reuse.
+          </p>
+          <div class="project-footer">
+            <span>July 31, 2025</span>
+            <a href="projects/falcon9_landing_analysis.html" class="project-link-btn">Case Study <i class="bi bi-arrow-right-short"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-text">
+      © 2026 Prashant Kamble. Built for aerospace performance. Made with ❤️ and HTML/CSS/JS.
+    </div>
+  </footer>
+
+  <script>
+    // Handle Interactive Filtering
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Toggle active button class
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const filterValue = button.getAttribute('data-filter');
+
+        projectCards.forEach(card => {
+          const cardCategory = card.getAttribute('data-category');
+          if (filterValue === 'all' || cardCategory === filterValue) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

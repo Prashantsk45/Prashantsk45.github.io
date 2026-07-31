@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prashant Kamble — Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+  <div class="shooting-star shooting-star-1"></div>
+  <div class="shooting-star shooting-star-2"></div>
+  <div class="shooting-star shooting-star-3"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">PRASHANT<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About Me</a></li>
+    </ul>
+    <div class="nav-icons">
+      <a href="https://linkedin.com/in/prashant-kamble272" target="_blank"><i class="bi bi-linkedin"></i></a>
+      <a href="https://github.com/Prashantsk45" target="_blank"><i class="bi bi-github"></i></a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="container">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-subtitle">
+          <i class="bi bi-rocket-takeoff"></i> Aerospace Data Scientist
+        </div>
+        <h1 class="hero-title">Engineering the Flight Paths of Tomorrow</h1>
+        <p class="hero-description">
+          Hi! I am Prashant Kamble, an Aerospace Engineering Graduate and R&D researcher. I specialize in Aircraft Design, Computational Fluid Dynamics (CFD), and Finite Element Analysis (FEA). I combine deep aerospace domain knowledge with advanced data analytics and machine learning pipelines to solve complex aerodynamics and structural optimization problems.
+        </p>
+        <div class="hero-buttons">
+          <a href="projects.html" class="btn btn-primary">Explore Projects <i class="bi bi-arrow-right"></i></a>
+          <a href="about.html" class="btn btn-secondary">About Me</a>
+        </div>
+      </div>
+
+      <!-- Orbital Profile Card -->
+      <div class="hero-visual">
+        <div class="orbital-container">
+          <div class="profile-card">
+            <img src="images/profile.png" alt="Prashant Kamble">
+          </div>
+          <div class="orbital-ring ring-1"></div>
+          <div class="orbital-ring ring-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Developer Terminal Component -->
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <div class="terminal-buttons">
+          <div class="term-btn term-close"></div>
+          <div class="term-btn term-min"></div>
+          <div class="term-btn term-max"></div>
+        </div>
+        <div class="terminal-title">prashant@aerodev: ~</div>
+        <div></div>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line">
+          <span class="term-prompt">❯</span>
+          <span class="term-cmd">neofetch</span>
+        </div>
+        <div class="term-output">
+          <span class="term-keyword">Host:</span> Prashant Kamble<br>
+          <span class="term-keyword">Education:</span> B.Tech in Aerospace Engineering @ LPU (CGPA: 7.69)<br>
+          <span class="term-keyword">Interests:</span> CFD, FEA, UAV Design, Aerodynamics, Rocket Propellants, Data Science<br>
+          <span class="term-keyword">Languages:</span> Python, SQL, C++, MATLAB<br>
+          <span class="term-keyword">Frameworks:</span> TensorFlow, PyTorch, Pandas, Scikit-Learn, Dash/Plotly<br>
+          <span class="term-keyword">Tools:</span> ANSYS Fluent, ANSYS Mechanical, CATIA V5, SolidWorks, STK (Grandmaster)
+        </div>
+        <div class="terminal-line">
+          <span class="term-prompt">❯</span>
+          <span class="term-cmd">python -c "import aerospace"</span>
+        </div>
+        <div class="term-output">
+          <span class="term-comment"># Optimizing lift-to-drag ratios and aerospace structure durability</span><br>
+          <span class="term-string">"Aerospace data pipelines successfully loaded. Flight systems optimized by 12%."</span>
+        </div>
+        <div class="terminal-line">
+          <span class="term-prompt">❯</span>
+          <span class="term-cmd"><span class="cursor">_</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-text">
+      © 2026 Prashant Kamble. Built for aerospace performance. Made with ❤️ and HTML/CSS/JS.
+    </div>
+  </footer>
+
+  <style>
+    .cursor {
+      animation: blink 1s infinite;
+      color: var(--primary-neon);
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+  </style>
+</body>
+</html>

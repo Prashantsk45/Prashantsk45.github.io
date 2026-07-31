@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Prashant – 2_spacex_web_scraping</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Prashant</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html">Projects</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About Me</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/prashant-kamble272"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Prashantsk45"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/prashant-kamble272"><i class="bi bi-award-fill" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#space-x-falcon-9-first-stage-landing-prediction" id="toc-space-x-falcon-9-first-stage-landing-prediction" class="nav-link active" data-scroll-target="#space-x-falcon-9-first-stage-landing-prediction"><strong>Space X Falcon 9 First Stage Landing Prediction</strong></a>
+  <ul class="collapse">
+  <li><a href="#web-scraping-falcon-9-and-falcon-heavy-launches-records-from-wikipedia" id="toc-web-scraping-falcon-9-and-falcon-heavy-launches-records-from-wikipedia" class="nav-link" data-scroll-target="#web-scraping-falcon-9-and-falcon-heavy-launches-records-from-wikipedia">Web scraping Falcon 9 and Falcon Heavy Launches Records from Wikipedia</a></li>
+  <li><a href="#objectives" id="toc-objectives" class="nav-link" data-scroll-target="#objectives">Objectives</a>
+  <ul class="collapse">
+  <li><a href="#task-1-request-the-falcon9-launch-wiki-page-from-its-url" id="toc-task-1-request-the-falcon9-launch-wiki-page-from-its-url" class="nav-link" data-scroll-target="#task-1-request-the-falcon9-launch-wiki-page-from-its-url">TASK 1: Request the Falcon9 Launch Wiki page from its URL</a></li>
+  <li><a href="#task-2-extract-all-columnvariable-names-from-the-html-table-header" id="toc-task-2-extract-all-columnvariable-names-from-the-html-table-header" class="nav-link" data-scroll-target="#task-2-extract-all-columnvariable-names-from-the-html-table-header">TASK 2: Extract all column/variable names from the HTML table header</a></li>
+  </ul></li>
+  <li><a href="#task-3-create-a-data-frame-by-parsing-the-launch-html-tables" id="toc-task-3-create-a-data-frame-by-parsing-the-launch-html-tables" class="nav-link" data-scroll-target="#task-3-create-a-data-frame-by-parsing-the-launch-html-tables">TASK 3: Create a data frame by parsing the launch HTML tables</a></li>
+  <li><a href="#authors" id="toc-authors" class="nav-link" data-scroll-target="#authors">Authors</a></li>
+  <li><a href="#change-log" id="toc-change-log" class="nav-link" data-scroll-target="#change-log">Change Log</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<center>
+<img src="https://gitlab.com/ibm/skills-network/courses/placeholder101/-/raw/main/labs/module%201/images/IDSNlogo.png" width="300" alt="cognitiveclass.ai logo">
+</center>
+<section id="space-x-falcon-9-first-stage-landing-prediction" class="level1">
+<h1><strong>Space X Falcon 9 First Stage Landing Prediction</strong></h1>
+<section id="web-scraping-falcon-9-and-falcon-heavy-launches-records-from-wikipedia" class="level2">
+<h2 class="anchored" data-anchor-id="web-scraping-falcon-9-and-falcon-heavy-launches-records-from-wikipedia">Web scraping Falcon 9 and Falcon Heavy Launches Records from Wikipedia</h2>
+<p>Estimated time needed: <strong>40</strong> minutes</p>
+<p>In this lab, you will be performing web scraping to collect Falcon 9 historical launch records from a Wikipedia page titled <code>List of Falcon 9 and Falcon Heavy launches</code></p>
+<p><a href="https://en.wikipedia.org/wiki/List_of_Falcon_9_and_Falcon_Heavy_launches?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01">https://en.wikipedia.org/wiki/List_of_Falcon_9_and_Falcon_Heavy_launches</a></p>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_1_L2/images/Falcon9_rocket_family.svg" class="img-fluid"></p>
+<p>Falcon 9 first stage will land successfully</p>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DS0701EN-SkillsNetwork/api/Images/landing_1.gif" class="img-fluid"></p>
+<p>Several examples of an unsuccessful landing are shown here:</p>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DS0701EN-SkillsNetwork/api/Images/crash.gif" class="img-fluid"></p>
+<p>More specifically, the launch records are stored in a HTML table shown below:</p>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_1_L2/images/falcon9-launches-wiki.png" class="img-fluid"></p>
+</section>
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<p>Web scrap Falcon 9 launch records with <code>BeautifulSoup</code>:</p>
+<ul>
+<li>Extract a Falcon 9 launch records HTML table from Wikipedia</li>
+<li>Parse the table and convert it into a Pandas data frame</li>
+</ul>
+<p>First let’s import required packages for this lab</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install beautifulsoup4</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip3 install requests</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="st">'Packages Installed!'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Requirement already satisfied: beautifulsoup4 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (4.10.0)
+Requirement already satisfied: soupsieve&gt;1.2 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from beautifulsoup4) (2.3.1)
+Requirement already satisfied: requests in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (2.26.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from requests) (2021.10.8)
+Requirement already satisfied: urllib3&lt;1.27,&gt;=1.21.1 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from requests) (1.26.7)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from requests) (3.1)
+Requirement already satisfied: charset-normalizer~=2.0.0 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from requests) (2.0.8)
+
+ 
+ Packages Installed! 
+</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> unicodedata</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and we will provide some helper functions for you to process web scraped HTML table</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> date_time(table_cells):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    This function returns the data and time from the HTML table cell</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Input: the element of a table data cell extracts extra row</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [data_time.strip() <span class="cf">for</span> data_time <span class="kw">in</span> <span class="bu">list</span>(table_cells.strings)][<span class="dv">0</span>:<span class="dv">2</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> booster_version(table_cells):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">    This function returns the booster version from the HTML table cell</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Input: the element of a table data cell extracts extra row</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    out<span class="op">=</span><span class="st">''</span>.join([booster_version <span class="cf">for</span> i,booster_version <span class="kw">in</span> <span class="bu">enumerate</span>( table_cells.strings) <span class="cf">if</span> i<span class="op">%</span><span class="dv">2</span><span class="op">==</span><span class="dv">0</span>][<span class="dv">0</span>:<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> landing_status(table_cells):</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">    This function returns the landing status from the HTML table cell </span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">    Input: the element of a table data cell extracts extra row</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    out<span class="op">=</span>[i <span class="cf">for</span> i <span class="kw">in</span> table_cells.strings][<span class="dv">0</span>]</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_mass(table_cells):</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    mass<span class="op">=</span>unicodedata.normalize(<span class="st">"NFKD"</span>, table_cells.text).strip()</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> mass:</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        mass.find(<span class="st">"kg"</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        new_mass<span class="op">=</span>mass[<span class="dv">0</span>:mass.find(<span class="st">"kg"</span>)<span class="op">+</span><span class="dv">2</span>]</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        new_mass<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> new_mass</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_column_from_header(row):</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">    This function returns the landing status from the HTML table cell</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">    Input: the element of a table data cell extracts extra row</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (row.br):</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        row.br.extract()</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row.a:</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        row.a.extract()</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row.sup:</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        row.sup.extract()</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    colunm_name <span class="op">=</span> <span class="st">' '</span>.join(row.contents)</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter the digit and empty names</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span>(colunm_name.strip().isdigit()):</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>        colunm_name <span class="op">=</span> colunm_name.strip()</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> colunm_name    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To keep the lab tasks consistent, you will be asked to scrape the data from a snapshot of the <code>List of Falcon 9 and Falcon Heavy launches</code> Wikipage updated on <code>9th June 2021</code></p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>static_url <span class="op">=</span> <span class="st">"https://en.wikipedia.org/w/index.php?title=List_of_Falcon_9_and_Falcon_Heavy_launches&amp;oldid=1027686922"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, request the HTML page from the above URL and get a <code>response</code> object</p>
+<section id="task-1-request-the-falcon9-launch-wiki-page-from-its-url" class="level3">
+<h3 class="anchored" data-anchor-id="task-1-request-the-falcon9-launch-wiki-page-from-its-url">TASK 1: Request the Falcon9 Launch Wiki page from its URL</h3>
+<p>First, let’s perform an HTTP GET method to request the Falcon9 Launch HTML page, as an HTTP response.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use requests.get() method with the provided static_url</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># assign the response to a object</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(static_url).text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Create a <code>BeautifulSoup</code> object from the HTML <code>response</code></p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use BeautifulSoup() to create a BeautifulSoup object from a response text content</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(response)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Print the page title to verify if the <code>BeautifulSoup</code> object was created properly</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>soup.title</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>&lt;title&gt;List of Falcon 9 and Falcon Heavy launches - Wikipedia&lt;/title&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="task-2-extract-all-columnvariable-names-from-the-html-table-header" class="level3">
+<h3 class="anchored" data-anchor-id="task-2-extract-all-columnvariable-names-from-the-html-table-header">TASK 2: Extract all column/variable names from the HTML table header</h3>
+<p>Next, we want to collect all relevant column names from the HTML table header</p>
+<p>Let’s try to find all tables on the wiki page first. If you need to refresh your memory about <code>BeautifulSoup</code>, please check the external reference link towards the end of this lab</p>
+<div class="cell" data-tags="[]" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the find_all function in the BeautifulSoup object, with element type `table`</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the result to a list called `html_tables`</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>html_tables <span class="op">=</span> soup.find_all(<span class="st">'table'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Starting from the third table is our target table contains the actual launch records.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(html_tables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>24</code></pre>
+</div>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's print the third table and check its content</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>first_launch_table <span class="op">=</span> html_tables[<span class="dv">2</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(first_launch_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;table class="wikitable plainrowheaders collapsible" style="width: 100%;"&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;th scope="col"&gt;Flight No.
+&lt;/th&gt;
+&lt;th scope="col"&gt;Date and&lt;br/&gt;time (&lt;a href="/wiki/Coordinated_Universal_Time" title="Coordinated Universal Time"&gt;UTC&lt;/a&gt;)
+&lt;/th&gt;
+&lt;th scope="col"&gt;&lt;a href="/wiki/List_of_Falcon_9_first-stage_boosters" title="List of Falcon 9 first-stage boosters"&gt;Version,&lt;br/&gt;Booster&lt;/a&gt; &lt;sup class="reference" id="cite_ref-booster_11-0"&gt;&lt;a href="#cite_note-booster-11"&gt;[b]&lt;/a&gt;&lt;/sup&gt;
+&lt;/th&gt;
+&lt;th scope="col"&gt;Launch site
+&lt;/th&gt;
+&lt;th scope="col"&gt;Payload&lt;sup class="reference" id="cite_ref-Dragon_12-0"&gt;&lt;a href="#cite_note-Dragon-12"&gt;[c]&lt;/a&gt;&lt;/sup&gt;
+&lt;/th&gt;
+&lt;th scope="col"&gt;Payload mass
+&lt;/th&gt;
+&lt;th scope="col"&gt;Orbit
+&lt;/th&gt;
+&lt;th scope="col"&gt;Customer
+&lt;/th&gt;
+&lt;th scope="col"&gt;Launch&lt;br/&gt;outcome
+&lt;/th&gt;
+&lt;th scope="col"&gt;&lt;a href="/wiki/Falcon_9_first-stage_landing_tests" title="Falcon 9 first-stage landing tests"&gt;Booster&lt;br/&gt;landing&lt;/a&gt;
+&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th rowspan="2" scope="row" style="text-align:center;"&gt;1
+&lt;/th&gt;
+&lt;td&gt;4 June 2010,&lt;br/&gt;18:45
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Falcon_9_v1.0" title="Falcon 9 v1.0"&gt;F9 v1.0&lt;/a&gt;&lt;sup class="reference" id="cite_ref-MuskMay2012_13-0"&gt;&lt;a href="#cite_note-MuskMay2012-13"&gt;[7]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;B0003.1&lt;sup class="reference" id="cite_ref-block_numbers_14-0"&gt;&lt;a href="#cite_note-block_numbers-14"&gt;[8]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Force_Station" title="Cape Canaveral Space Force Station"&gt;CCAFS&lt;/a&gt;,&lt;br/&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Launch_Complex_40" title="Cape Canaveral Space Launch Complex 40"&gt;SLC-40&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Dragon_Spacecraft_Qualification_Unit" title="Dragon Spacecraft Qualification Unit"&gt;Dragon Spacecraft Qualification Unit&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Low_Earth_orbit" title="Low Earth orbit"&gt;LEO&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/SpaceX" title="SpaceX"&gt;SpaceX&lt;/a&gt;
+&lt;/td&gt;
+&lt;td class="table-success" style="background: #9EFF9E; vertical-align: middle; text-align: center;"&gt;Success
+&lt;/td&gt;
+&lt;td class="table-failure" style="background: #FFC7C7; vertical-align: middle; text-align: center;"&gt;Failure&lt;sup class="reference" id="cite_ref-ns20110930_15-0"&gt;&lt;a href="#cite_note-ns20110930-15"&gt;[9]&lt;/a&gt;&lt;/sup&gt;&lt;sup class="reference" id="cite_ref-16"&gt;&lt;a href="#cite_note-16"&gt;[10]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;&lt;small&gt;(parachute)&lt;/small&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan="9"&gt;First flight of Falcon 9 v1.0.&lt;sup class="reference" id="cite_ref-sfn20100604_17-0"&gt;&lt;a href="#cite_note-sfn20100604-17"&gt;[11]&lt;/a&gt;&lt;/sup&gt; Used a boilerplate version of Dragon capsule which was not designed to separate from the second stage.&lt;small&gt;(&lt;a href="#First_flight_of_Falcon_9"&gt;more details below&lt;/a&gt;)&lt;/small&gt; Attempted to recover the first stage by parachuting it into the ocean, but it burned up on reentry, before the parachutes even deployed.&lt;sup class="reference" id="cite_ref-parachute_18-0"&gt;&lt;a href="#cite_note-parachute-18"&gt;[12]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th rowspan="2" scope="row" style="text-align:center;"&gt;2
+&lt;/th&gt;
+&lt;td&gt;8 December 2010,&lt;br/&gt;15:43&lt;sup class="reference" id="cite_ref-spaceflightnow_Clark_Launch_Report_19-0"&gt;&lt;a href="#cite_note-spaceflightnow_Clark_Launch_Report-19"&gt;[13]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Falcon_9_v1.0" title="Falcon 9 v1.0"&gt;F9 v1.0&lt;/a&gt;&lt;sup class="reference" id="cite_ref-MuskMay2012_13-1"&gt;&lt;a href="#cite_note-MuskMay2012-13"&gt;[7]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;B0004.1&lt;sup class="reference" id="cite_ref-block_numbers_14-1"&gt;&lt;a href="#cite_note-block_numbers-14"&gt;[8]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Force_Station" title="Cape Canaveral Space Force Station"&gt;CCAFS&lt;/a&gt;,&lt;br/&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Launch_Complex_40" title="Cape Canaveral Space Launch Complex 40"&gt;SLC-40&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/SpaceX_Dragon" title="SpaceX Dragon"&gt;Dragon&lt;/a&gt; &lt;a class="mw-redirect" href="/wiki/COTS_Demo_Flight_1" title="COTS Demo Flight 1"&gt;demo flight C1&lt;/a&gt;&lt;br/&gt;(Dragon C101)
+&lt;/td&gt;
+&lt;td&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Low_Earth_orbit" title="Low Earth orbit"&gt;LEO&lt;/a&gt; (&lt;a href="/wiki/International_Space_Station" title="International Space Station"&gt;ISS&lt;/a&gt;)
+&lt;/td&gt;
+&lt;td&gt;&lt;div class="plainlist"&gt;
+&lt;ul&gt;&lt;li&gt;&lt;a href="/wiki/NASA" title="NASA"&gt;NASA&lt;/a&gt; (&lt;a href="/wiki/Commercial_Orbital_Transportation_Services" title="Commercial Orbital Transportation Services"&gt;COTS&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;a href="/wiki/National_Reconnaissance_Office" title="National Reconnaissance Office"&gt;NRO&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/td&gt;
+&lt;td class="table-success" style="background: #9EFF9E; vertical-align: middle; text-align: center;"&gt;Success&lt;sup class="reference" id="cite_ref-ns20110930_15-1"&gt;&lt;a href="#cite_note-ns20110930-15"&gt;[9]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td class="table-failure" style="background: #FFC7C7; vertical-align: middle; text-align: center;"&gt;Failure&lt;sup class="reference" id="cite_ref-ns20110930_15-2"&gt;&lt;a href="#cite_note-ns20110930-15"&gt;[9]&lt;/a&gt;&lt;/sup&gt;&lt;sup class="reference" id="cite_ref-20"&gt;&lt;a href="#cite_note-20"&gt;[14]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;&lt;small&gt;(parachute)&lt;/small&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan="9"&gt;Maiden flight of &lt;a class="mw-redirect" href="/wiki/Dragon_capsule" title="Dragon capsule"&gt;Dragon capsule&lt;/a&gt;, consisting of over 3 hours of testing thruster maneuvering and reentry.&lt;sup class="reference" id="cite_ref-spaceflightnow_Clark_unleashing_Dragon_21-0"&gt;&lt;a href="#cite_note-spaceflightnow_Clark_unleashing_Dragon-21"&gt;[15]&lt;/a&gt;&lt;/sup&gt; Attempted to recover the first stage by parachuting it into the ocean, but it disintegrated upon reentry, before the parachutes were deployed.&lt;sup class="reference" id="cite_ref-parachute_18-1"&gt;&lt;a href="#cite_note-parachute-18"&gt;[12]&lt;/a&gt;&lt;/sup&gt; &lt;small&gt;(&lt;a href="#COTS_demo_missions"&gt;more details below&lt;/a&gt;)&lt;/small&gt; It also included two &lt;a href="/wiki/CubeSat" title="CubeSat"&gt;CubeSats&lt;/a&gt;,&lt;sup class="reference" id="cite_ref-NRO_Taps_Boeing_for_Next_Batch_of_CubeSats_22-0"&gt;&lt;a href="#cite_note-NRO_Taps_Boeing_for_Next_Batch_of_CubeSats-22"&gt;[16]&lt;/a&gt;&lt;/sup&gt; and a wheel of &lt;a href="/wiki/Brou%C3%A8re" title="Brouère"&gt;Brouère&lt;/a&gt; cheese.
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th rowspan="2" scope="row" style="text-align:center;"&gt;3
+&lt;/th&gt;
+&lt;td&gt;22 May 2012,&lt;br/&gt;07:44&lt;sup class="reference" id="cite_ref-BBC_new_era_23-0"&gt;&lt;a href="#cite_note-BBC_new_era-23"&gt;[17]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Falcon_9_v1.0" title="Falcon 9 v1.0"&gt;F9 v1.0&lt;/a&gt;&lt;sup class="reference" id="cite_ref-MuskMay2012_13-2"&gt;&lt;a href="#cite_note-MuskMay2012-13"&gt;[7]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;B0005.1&lt;sup class="reference" id="cite_ref-block_numbers_14-2"&gt;&lt;a href="#cite_note-block_numbers-14"&gt;[8]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Force_Station" title="Cape Canaveral Space Force Station"&gt;CCAFS&lt;/a&gt;,&lt;br/&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Launch_Complex_40" title="Cape Canaveral Space Launch Complex 40"&gt;SLC-40&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/SpaceX_Dragon" title="SpaceX Dragon"&gt;Dragon&lt;/a&gt; &lt;a class="mw-redirect" href="/wiki/Dragon_C2%2B" title="Dragon C2+"&gt;demo flight C2+&lt;/a&gt;&lt;sup class="reference" id="cite_ref-C2_24-0"&gt;&lt;a href="#cite_note-C2-24"&gt;[18]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;(Dragon C102)
+&lt;/td&gt;
+&lt;td&gt;525&nbsp;kg (1,157&nbsp;lb)&lt;sup class="reference" id="cite_ref-25"&gt;&lt;a href="#cite_note-25"&gt;[19]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Low_Earth_orbit" title="Low Earth orbit"&gt;LEO&lt;/a&gt; (&lt;a href="/wiki/International_Space_Station" title="International Space Station"&gt;ISS&lt;/a&gt;)
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/NASA" title="NASA"&gt;NASA&lt;/a&gt; (&lt;a href="/wiki/Commercial_Orbital_Transportation_Services" title="Commercial Orbital Transportation Services"&gt;COTS&lt;/a&gt;)
+&lt;/td&gt;
+&lt;td class="table-success" style="background: #9EFF9E; vertical-align: middle; text-align: center;"&gt;Success&lt;sup class="reference" id="cite_ref-26"&gt;&lt;a href="#cite_note-26"&gt;[20]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td class="table-noAttempt" style="background: #EEE; vertical-align: middle; white-space: nowrap; text-align: center;"&gt;No attempt
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan="9"&gt;Dragon spacecraft demonstrated a series of tests before it was allowed to approach the &lt;a href="/wiki/International_Space_Station" title="International Space Station"&gt;International Space Station&lt;/a&gt;. Two days later, it became the first commercial spacecraft to board the ISS.&lt;sup class="reference" id="cite_ref-BBC_new_era_23-1"&gt;&lt;a href="#cite_note-BBC_new_era-23"&gt;[17]&lt;/a&gt;&lt;/sup&gt; &lt;small&gt;(&lt;a href="#COTS_demo_missions"&gt;more details below&lt;/a&gt;)&lt;/small&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th rowspan="3" scope="row" style="text-align:center;"&gt;4
+&lt;/th&gt;
+&lt;td rowspan="2"&gt;8 October 2012,&lt;br/&gt;00:35&lt;sup class="reference" id="cite_ref-SFN_LLog_27-0"&gt;&lt;a href="#cite_note-SFN_LLog-27"&gt;[21]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td rowspan="2"&gt;&lt;a href="/wiki/Falcon_9_v1.0" title="Falcon 9 v1.0"&gt;F9 v1.0&lt;/a&gt;&lt;sup class="reference" id="cite_ref-MuskMay2012_13-3"&gt;&lt;a href="#cite_note-MuskMay2012-13"&gt;[7]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;B0006.1&lt;sup class="reference" id="cite_ref-block_numbers_14-3"&gt;&lt;a href="#cite_note-block_numbers-14"&gt;[8]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td rowspan="2"&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Force_Station" title="Cape Canaveral Space Force Station"&gt;CCAFS&lt;/a&gt;,&lt;br/&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Launch_Complex_40" title="Cape Canaveral Space Launch Complex 40"&gt;SLC-40&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/SpaceX_CRS-1" title="SpaceX CRS-1"&gt;SpaceX CRS-1&lt;/a&gt;&lt;sup class="reference" id="cite_ref-sxManifest20120925_28-0"&gt;&lt;a href="#cite_note-sxManifest20120925-28"&gt;[22]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;(Dragon C103)
+&lt;/td&gt;
+&lt;td&gt;4,700&nbsp;kg (10,400&nbsp;lb)
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Low_Earth_orbit" title="Low Earth orbit"&gt;LEO&lt;/a&gt; (&lt;a href="/wiki/International_Space_Station" title="International Space Station"&gt;ISS&lt;/a&gt;)
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/NASA" title="NASA"&gt;NASA&lt;/a&gt; (&lt;a href="/wiki/Commercial_Resupply_Services" title="Commercial Resupply Services"&gt;CRS&lt;/a&gt;)
+&lt;/td&gt;
+&lt;td class="table-success" style="background: #9EFF9E; vertical-align: middle; text-align: center;"&gt;Success
+&lt;/td&gt;
+&lt;td rowspan="2" style="background:#ececec; text-align:center;"&gt;&lt;span class="nowrap"&gt;No attempt&lt;/span&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href="/wiki/Orbcomm_(satellite)" title="Orbcomm (satellite)"&gt;Orbcomm-OG2&lt;/a&gt;&lt;sup class="reference" id="cite_ref-Orbcomm_29-0"&gt;&lt;a href="#cite_note-Orbcomm-29"&gt;[23]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;172&nbsp;kg (379&nbsp;lb)&lt;sup class="reference" id="cite_ref-gunter-og2_30-0"&gt;&lt;a href="#cite_note-gunter-og2-30"&gt;[24]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Low_Earth_orbit" title="Low Earth orbit"&gt;LEO&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Orbcomm" title="Orbcomm"&gt;Orbcomm&lt;/a&gt;
+&lt;/td&gt;
+&lt;td class="table-partial" style="background: #FE9; vertical-align: middle; text-align: center;"&gt;Partial failure&lt;sup class="reference" id="cite_ref-nyt-20121030_31-0"&gt;&lt;a href="#cite_note-nyt-20121030-31"&gt;[25]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan="9"&gt;CRS-1 was successful, but the &lt;a href="/wiki/Secondary_payload" title="Secondary payload"&gt;secondary payload&lt;/a&gt; was inserted into an abnormally low orbit and subsequently lost. This was due to one of the nine &lt;a href="/wiki/SpaceX_Merlin" title="SpaceX Merlin"&gt;Merlin engines&lt;/a&gt; shutting down during the launch, and NASA declining a second reignition, as per &lt;a href="/wiki/International_Space_Station" title="International Space Station"&gt;ISS&lt;/a&gt; visiting vehicle safety rules, the primary payload owner is contractually allowed to decline a second reignition. NASA stated that this was because SpaceX could not guarantee a high enough likelihood of the second stage completing the second burn successfully which was required to avoid any risk of secondary payload's collision with the ISS.&lt;sup class="reference" id="cite_ref-OrbcommTotalLoss_32-0"&gt;&lt;a href="#cite_note-OrbcommTotalLoss-32"&gt;[26]&lt;/a&gt;&lt;/sup&gt;&lt;sup class="reference" id="cite_ref-sn20121011_33-0"&gt;&lt;a href="#cite_note-sn20121011-33"&gt;[27]&lt;/a&gt;&lt;/sup&gt;&lt;sup class="reference" id="cite_ref-34"&gt;&lt;a href="#cite_note-34"&gt;[28]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th rowspan="2" scope="row" style="text-align:center;"&gt;5
+&lt;/th&gt;
+&lt;td&gt;1 March 2013,&lt;br/&gt;15:10
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Falcon_9_v1.0" title="Falcon 9 v1.0"&gt;F9 v1.0&lt;/a&gt;&lt;sup class="reference" id="cite_ref-MuskMay2012_13-4"&gt;&lt;a href="#cite_note-MuskMay2012-13"&gt;[7]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;B0007.1&lt;sup class="reference" id="cite_ref-block_numbers_14-4"&gt;&lt;a href="#cite_note-block_numbers-14"&gt;[8]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Force_Station" title="Cape Canaveral Space Force Station"&gt;CCAFS&lt;/a&gt;,&lt;br/&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Launch_Complex_40" title="Cape Canaveral Space Launch Complex 40"&gt;SLC-40&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/SpaceX_CRS-2" title="SpaceX CRS-2"&gt;SpaceX CRS-2&lt;/a&gt;&lt;sup class="reference" id="cite_ref-sxManifest20120925_28-1"&gt;&lt;a href="#cite_note-sxManifest20120925-28"&gt;[22]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;(Dragon C104)
+&lt;/td&gt;
+&lt;td&gt;4,877&nbsp;kg (10,752&nbsp;lb)
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Low_Earth_orbit" title="Low Earth orbit"&gt;LEO&lt;/a&gt; (&lt;a class="mw-redirect" href="/wiki/ISS" title="ISS"&gt;ISS&lt;/a&gt;)
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/NASA" title="NASA"&gt;NASA&lt;/a&gt; (&lt;a href="/wiki/Commercial_Resupply_Services" title="Commercial Resupply Services"&gt;CRS&lt;/a&gt;)
+&lt;/td&gt;
+&lt;td class="table-success" style="background: #9EFF9E; vertical-align: middle; text-align: center;"&gt;Success
+&lt;/td&gt;
+&lt;td class="table-noAttempt" style="background: #EEE; vertical-align: middle; white-space: nowrap; text-align: center;"&gt;No attempt
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan="9"&gt;Last launch of the original Falcon 9 v1.0 &lt;a href="/wiki/Launch_vehicle" title="Launch vehicle"&gt;launch vehicle&lt;/a&gt;, first use of the unpressurized trunk section of Dragon.&lt;sup class="reference" id="cite_ref-sxf9_20110321_35-0"&gt;&lt;a href="#cite_note-sxf9_20110321-35"&gt;[29]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th rowspan="2" scope="row" style="text-align:center;"&gt;6
+&lt;/th&gt;
+&lt;td&gt;29 September 2013,&lt;br/&gt;16:00&lt;sup class="reference" id="cite_ref-pa20130930_36-0"&gt;&lt;a href="#cite_note-pa20130930-36"&gt;[30]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Falcon_9_v1.1" title="Falcon 9 v1.1"&gt;F9 v1.1&lt;/a&gt;&lt;sup class="reference" id="cite_ref-MuskMay2012_13-5"&gt;&lt;a href="#cite_note-MuskMay2012-13"&gt;[7]&lt;/a&gt;&lt;/sup&gt;&lt;br/&gt;B1003&lt;sup class="reference" id="cite_ref-block_numbers_14-5"&gt;&lt;a href="#cite_note-block_numbers-14"&gt;[8]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a class="mw-redirect" href="/wiki/Vandenberg_Air_Force_Base" title="Vandenberg Air Force Base"&gt;VAFB&lt;/a&gt;,&lt;br/&gt;&lt;a href="/wiki/Vandenberg_Space_Launch_Complex_4" title="Vandenberg Space Launch Complex 4"&gt;SLC-4E&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/CASSIOPE" title="CASSIOPE"&gt;CASSIOPE&lt;/a&gt;&lt;sup class="reference" id="cite_ref-sxManifest20120925_28-2"&gt;&lt;a href="#cite_note-sxManifest20120925-28"&gt;[22]&lt;/a&gt;&lt;/sup&gt;&lt;sup class="reference" id="cite_ref-CASSIOPE_MDA_37-0"&gt;&lt;a href="#cite_note-CASSIOPE_MDA-37"&gt;[31]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;500&nbsp;kg (1,100&nbsp;lb)
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Polar_orbit" title="Polar orbit"&gt;Polar orbit&lt;/a&gt; &lt;a href="/wiki/Low_Earth_orbit" title="Low Earth orbit"&gt;LEO&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Maxar_Technologies" title="Maxar Technologies"&gt;MDA&lt;/a&gt;
+&lt;/td&gt;
+&lt;td class="table-success" style="background: #9EFF9E; vertical-align: middle; text-align: center;"&gt;Success&lt;sup class="reference" id="cite_ref-pa20130930_36-1"&gt;&lt;a href="#cite_note-pa20130930-36"&gt;[30]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td class="table-no2" style="background: #FFE3E3; color: black; vertical-align: middle; text-align: center;"&gt;Uncontrolled&lt;br/&gt;&lt;small&gt;(ocean)&lt;/small&gt;&lt;sup class="reference" id="cite_ref-ocean_landing_38-0"&gt;&lt;a href="#cite_note-ocean_landing-38"&gt;[d]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan="9"&gt;First commercial mission with a private customer, first launch from Vandenberg, and demonstration flight of Falcon 9 v1.1 with an improved 13-tonne to LEO capacity.&lt;sup class="reference" id="cite_ref-sxf9_20110321_35-1"&gt;&lt;a href="#cite_note-sxf9_20110321-35"&gt;[29]&lt;/a&gt;&lt;/sup&gt; After separation from the second stage carrying Canadian commercial and scientific satellites, the first stage booster performed a controlled reentry,&lt;sup class="reference" id="cite_ref-39"&gt;&lt;a href="#cite_note-39"&gt;[32]&lt;/a&gt;&lt;/sup&gt; and an &lt;a href="/wiki/Falcon_9_first-stage_landing_tests" title="Falcon 9 first-stage landing tests"&gt;ocean touchdown test&lt;/a&gt; for the first time. This provided good test data, even though the booster started rolling as it neared the ocean, leading to the shutdown of the central engine as the roll depleted it of fuel, resulting in a hard impact with the ocean.&lt;sup class="reference" id="cite_ref-pa20130930_36-2"&gt;&lt;a href="#cite_note-pa20130930-36"&gt;[30]&lt;/a&gt;&lt;/sup&gt; This was the first known attempt of a rocket engine being lit to perform a supersonic retro propulsion, and allowed SpaceX to enter a public-private partnership with &lt;a href="/wiki/NASA" title="NASA"&gt;NASA&lt;/a&gt; and its Mars entry, descent, and landing technologies research projects.&lt;sup class="reference" id="cite_ref-40"&gt;&lt;a href="#cite_note-40"&gt;[33]&lt;/a&gt;&lt;/sup&gt; &lt;small&gt;(&lt;a href="#Maiden_flight_of_v1.1"&gt;more details below&lt;/a&gt;)&lt;/small&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;th rowspan="2" scope="row" style="text-align:center;"&gt;7
+&lt;/th&gt;
+&lt;td&gt;3 December 2013,&lt;br/&gt;22:41&lt;sup class="reference" id="cite_ref-sfn_wwls20130624_41-0"&gt;&lt;a href="#cite_note-sfn_wwls20130624-41"&gt;[34]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Falcon_9_v1.1" title="Falcon 9 v1.1"&gt;F9 v1.1&lt;/a&gt;&lt;br/&gt;B1004
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Force_Station" title="Cape Canaveral Space Force Station"&gt;CCAFS&lt;/a&gt;,&lt;br/&gt;&lt;a href="/wiki/Cape_Canaveral_Space_Launch_Complex_40" title="Cape Canaveral Space Launch Complex 40"&gt;SLC-40&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/SES-8" title="SES-8"&gt;SES-8&lt;/a&gt;&lt;sup class="reference" id="cite_ref-sxManifest20120925_28-3"&gt;&lt;a href="#cite_note-sxManifest20120925-28"&gt;[22]&lt;/a&gt;&lt;/sup&gt;&lt;sup class="reference" id="cite_ref-spx-pr_42-0"&gt;&lt;a href="#cite_note-spx-pr-42"&gt;[35]&lt;/a&gt;&lt;/sup&gt;&lt;sup class="reference" id="cite_ref-aw20110323_43-0"&gt;&lt;a href="#cite_note-aw20110323-43"&gt;[36]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td&gt;3,170&nbsp;kg (6,990&nbsp;lb)
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/Geostationary_transfer_orbit" title="Geostationary transfer orbit"&gt;GTO&lt;/a&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;a href="/wiki/SES_S.A." title="SES S.A."&gt;SES&lt;/a&gt;
+&lt;/td&gt;
+&lt;td class="table-success" style="background: #9EFF9E; vertical-align: middle; text-align: center;"&gt;Success&lt;sup class="reference" id="cite_ref-SNMissionStatus7_44-0"&gt;&lt;a href="#cite_note-SNMissionStatus7-44"&gt;[37]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;
+&lt;td class="table-noAttempt" style="background: #EEE; vertical-align: middle; white-space: nowrap; text-align: center;"&gt;No attempt&lt;br/&gt;&lt;sup class="reference" id="cite_ref-sf10120131203_45-0"&gt;&lt;a href="#cite_note-sf10120131203-45"&gt;[38]&lt;/a&gt;&lt;/sup&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan="9"&gt;First &lt;a href="/wiki/Geostationary_transfer_orbit" title="Geostationary transfer orbit"&gt;Geostationary transfer orbit&lt;/a&gt; (GTO) launch for Falcon 9,&lt;sup class="reference" id="cite_ref-spx-pr_42-1"&gt;&lt;a href="#cite_note-spx-pr-42"&gt;[35]&lt;/a&gt;&lt;/sup&gt; and first successful reignition of the second stage.&lt;sup class="reference" id="cite_ref-46"&gt;&lt;a href="#cite_note-46"&gt;[39]&lt;/a&gt;&lt;/sup&gt; SES-8 was inserted into a &lt;a href="/wiki/Geostationary_transfer_orbit" title="Geostationary transfer orbit"&gt;Super-Synchronous Transfer Orbit&lt;/a&gt; of 79,341&nbsp;km (49,300&nbsp;mi) in apogee with an &lt;a href="/wiki/Orbital_inclination" title="Orbital inclination"&gt;inclination&lt;/a&gt; of 20.55° to the &lt;a href="/wiki/Equator" title="Equator"&gt;equator&lt;/a&gt;.
+&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</code></pre>
+</div>
+</div>
+<p>You should able to see the columns names embedded in the table header elements <code>&lt;th&gt;</code> as follows:</p>
+<pre><code>&lt;tr&gt;
+&lt;th scope="col"&gt;Flight No.
+&lt;/th&gt;
+&lt;th scope="col"&gt;Date and&lt;br/&gt;time (&lt;a href="/wiki/Coordinated_Universal_Time" title="Coordinated Universal Time"&gt;UTC&lt;/a&gt;)
+&lt;/th&gt;
+&lt;th scope="col"&gt;&lt;a href="/wiki/List_of_Falcon_9_first-stage_boosters" title="List of Falcon 9 first-stage boosters"&gt;Version,&lt;br/&gt;Booster&lt;/a&gt; &lt;sup class="reference" id="cite_ref-booster_11-0"&gt;&lt;a href="#cite_note-booster-11"&gt;[b]&lt;/a&gt;&lt;/sup&gt;
+&lt;/th&gt;
+&lt;th scope="col"&gt;Launch site
+&lt;/th&gt;
+&lt;th scope="col"&gt;Payload&lt;sup class="reference" id="cite_ref-Dragon_12-0"&gt;&lt;a href="#cite_note-Dragon-12"&gt;[c]&lt;/a&gt;&lt;/sup&gt;
+&lt;/th&gt;
+&lt;th scope="col"&gt;Payload mass
+&lt;/th&gt;
+&lt;th scope="col"&gt;Orbit
+&lt;/th&gt;
+&lt;th scope="col"&gt;Customer
+&lt;/th&gt;
+&lt;th scope="col"&gt;Launch&lt;br/&gt;outcome
+&lt;/th&gt;
+&lt;th scope="col"&gt;&lt;a href="/wiki/Falcon_9_first-stage_landing_tests" title="Falcon 9 first-stage landing tests"&gt;Booster&lt;br/&gt;landing&lt;/a&gt;
+&lt;/th&gt;&lt;/tr&gt;</code></pre>
+<p>Next, we just need to iterate through the <code>&lt;th&gt;</code> elements and apply the provided <code>extract_column_from_header()</code> to extract column name one by one</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>column_names <span class="op">=</span> []</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply find_all() function with `th` element on first_launch_table</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate each th element and apply the provided extract_column_from_header() to get a column name</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Append the Non-empty column name (`if name is not None and len(name) &gt; 0`) into a list called column_names</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> first_launch_table.find_all(<span class="st">'th'</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item, row <span class="kw">in</span> <span class="bu">enumerate</span>(rows):</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    col_name <span class="op">=</span> extract_column_from_header(row)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (col_name <span class="op">!=</span> <span class="va">None</span> <span class="kw">and</span> <span class="bu">len</span>(col_name) <span class="op">&gt;</span> <span class="dv">0</span>):</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        column_names.append(col_name)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Check the extracted column names</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(column_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Flight No.', 'Date and time ( )', 'Launch site', 'Payload', 'Payload mass', 'Orbit', 'Customer', 'Launch outcome']</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="task-3-create-a-data-frame-by-parsing-the-launch-html-tables" class="level2">
+<h2 class="anchored" data-anchor-id="task-3-create-a-data-frame-by-parsing-the-launch-html-tables">TASK 3: Create a data frame by parsing the launch HTML tables</h2>
+<p>We will create an empty dictionary with keys from the extracted column names in the previous task. Later, this dictionary will be converted into a Pandas dataframe</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>launch_dict<span class="op">=</span> <span class="bu">dict</span>.fromkeys(column_names)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove an irrelvant column</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">del</span> launch_dict[<span class="st">'Date and time ( )'</span>]</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Let's initial the launch_dict with each value to be an empty list</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Flight No.'</span>] <span class="op">=</span> []</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Launch site'</span>] <span class="op">=</span> []</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Payload'</span>] <span class="op">=</span> []</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Payload mass'</span>] <span class="op">=</span> []</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Orbit'</span>] <span class="op">=</span> []</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Customer'</span>] <span class="op">=</span> []</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Launch outcome'</span>] <span class="op">=</span> []</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Added some new columns</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Version Booster'</span>]<span class="op">=</span>[]</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Booster landing'</span>]<span class="op">=</span>[]</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Date'</span>]<span class="op">=</span>[]</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>launch_dict[<span class="st">'Time'</span>]<span class="op">=</span>[]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>launch_dict</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>{'Flight No.': [],
+ 'Launch site': [],
+ 'Payload': [],
+ 'Payload mass': [],
+ 'Orbit': [],
+ 'Customer': [],
+ 'Launch outcome': [],
+ 'Version Booster': [],
+ 'Booster landing': [],
+ 'Date': [],
+ 'Time': []}</code></pre>
+</div>
+</div>
+<p>Next, we just need to fill up the <code>launch_dict</code> with launch records extracted from table rows.</p>
+<p>Usually, HTML tables in Wiki pages are likely to contain unexpected annotations and other types of noises, such as reference links <code>B0004.1[8]</code>, missing values <code>N/A [e]</code>, inconsistent formatting, etc.</p>
+<p>To simplify the parsing process, we have provided an incomplete code snippet below to help you to fill up the <code>launch_dict</code>. Please complete the following code snippet with TODOs or you can choose to write your own logic to parse all launch tables:</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>extracted_row <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract each table </span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> table_number,table <span class="kw">in</span> <span class="bu">enumerate</span>(soup.find_all(<span class="st">'table'</span>,<span class="st">"wikitable plainrowheaders collapsible"</span>)):</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>   <span class="co"># get table row </span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> rows <span class="kw">in</span> table.find_all(<span class="st">"tr"</span>):</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">#check to see if first table heading is as number corresponding to launch a number </span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> rows.th:</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> rows.th.string:</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                flight_number<span class="op">=</span>rows.th.string.strip()</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>                flag<span class="op">=</span>flight_number.isdigit()</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>            flag<span class="op">=</span><span class="va">False</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">#get table element </span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        row<span class="op">=</span>rows.find_all(<span class="st">'td'</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">#if it is number save cells in a dictonary </span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> flag:</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>            extracted_row <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Flight Number value</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the flight_number into launch_dict with key `Flight No.`</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Flight No.'</span>].append(flight_number)</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(flight_number)</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>            datatimelist<span class="op">=</span>date_time(row[<span class="dv">0</span>])</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Date value</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the date into launch_dict with key `Date`</span></span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>            date <span class="op">=</span> datatimelist[<span class="dv">0</span>].strip(<span class="st">','</span>)</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Date'</span>].append(date)</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(date)</span></span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Time value</span></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the time into launch_dict with key `Time`</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>            time <span class="op">=</span> datatimelist[<span class="dv">1</span>]</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Time'</span>].append(time)</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(time)</span></span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Booster version</span></span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the bv into launch_dict with key `Version Booster`</span></span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>            bv<span class="op">=</span>booster_version(row[<span class="dv">1</span>])</span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span>(bv):</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>                bv<span class="op">=</span>row[<span class="dv">1</span>].a.string</span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Version Booster'</span>].append(bv)</span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(bv)</span></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Launch Site</span></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the bv into launch_dict with key `Launch Site`</span></span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>            launch_site <span class="op">=</span> row[<span class="dv">2</span>].a.string</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Launch site'</span>].append(launch_site)</span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(launch_site)</span></span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Payload</span></span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the payload into launch_dict with key `Payload`</span></span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a>            payload <span class="op">=</span> row[<span class="dv">3</span>].a.string</span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Payload'</span>].append(payload)</span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(payload)</span></span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Payload Mass</span></span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the payload_mass into launch_dict with key `Payload mass`</span></span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a>            payload_mass <span class="op">=</span> get_mass(row[<span class="dv">4</span>])</span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Payload mass'</span>].append(payload_mass)</span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(payload)</span></span>
+<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Orbit</span></span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the orbit into launch_dict with key `Orbit`</span></span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a>            orbit <span class="op">=</span> row[<span class="dv">5</span>].a.string</span>
+<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Orbit'</span>].append(orbit)</span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(orbit)</span></span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Customer</span></span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the customer into launch_dict with key `Customer`</span></span>
+<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a>            <span class="co">#customer = row[6].a.string</span></span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a>            customer <span class="op">=</span> row[<span class="dv">6</span>].text.strip()</span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Customer'</span>].append(customer)</span>
+<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(customer)</span></span>
+<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Launch outcome</span></span>
+<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the launch_outcome into launch_dict with key `Launch outcome`</span></span>
+<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a>            launch_outcome <span class="op">=</span> <span class="bu">list</span>(row[<span class="dv">7</span>].strings)[<span class="dv">0</span>]</span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Launch outcome'</span>].append(launch_outcome)</span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(launch_outcome)</span></span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Booster landing</span></span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a>            <span class="co"># </span><span class="al">TODO</span><span class="co">: Append the launch_outcome into launch_dict with key `Booster landing`</span></span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a>            booster_landing <span class="op">=</span> landing_status(row[<span class="dv">8</span>])</span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a>            launch_dict[<span class="st">'Booster landing'</span>].append(booster_landing)</span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a>            <span class="co">#print(booster_landing)</span></span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a>            </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After you have fill in the parsed launch record values into <code>launch_dict</code>, you can create a dataframe from it.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#df=pd.DataFrame(launch_dict)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span> pd.DataFrame({ key:pd.Series(value) <span class="cf">for</span> key, value <span class="kw">in</span> launch_dict.items() })</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Flight No.</th>
+      <th>Launch site</th>
+      <th>Payload</th>
+      <th>Payload mass</th>
+      <th>Orbit</th>
+      <th>Customer</th>
+      <th>Launch outcome</th>
+      <th>Version Booster</th>
+      <th>Booster landing</th>
+      <th>Date</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>CCAFS</td>
+      <td>Dragon Spacecraft Qualification Unit</td>
+      <td>0</td>
+      <td>LEO</td>
+      <td>SpaceX</td>
+      <td>Success\n</td>
+      <td>F9 v1.0B0003.1</td>
+      <td>Failure</td>
+      <td>4 June 2010</td>
+      <td>18:45</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>CCAFS</td>
+      <td>Dragon</td>
+      <td>0</td>
+      <td>LEO</td>
+      <td>NASA (COTS)\nNRO</td>
+      <td>Success</td>
+      <td>F9 v1.0B0004.1</td>
+      <td>Failure</td>
+      <td>8 December 2010</td>
+      <td>15:43</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>CCAFS</td>
+      <td>Dragon</td>
+      <td>525 kg</td>
+      <td>LEO</td>
+      <td>NASA (COTS)</td>
+      <td>Success</td>
+      <td>F9 v1.0B0005.1</td>
+      <td>No attempt\n</td>
+      <td>22 May 2012</td>
+      <td>07:44</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>CCAFS</td>
+      <td>SpaceX CRS-1</td>
+      <td>4,700 kg</td>
+      <td>LEO</td>
+      <td>NASA (CRS)</td>
+      <td>Success\n</td>
+      <td>F9 v1.0B0006.1</td>
+      <td>No attempt</td>
+      <td>8 October 2012</td>
+      <td>00:35</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>CCAFS</td>
+      <td>SpaceX CRS-2</td>
+      <td>4,877 kg</td>
+      <td>LEO</td>
+      <td>NASA (CRS)</td>
+      <td>Success\n</td>
+      <td>F9 v1.0B0007.1</td>
+      <td>No attempt\n</td>
+      <td>1 March 2013</td>
+      <td>15:10</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>117</td>
+      <td>CCSFS</td>
+      <td>Starlink</td>
+      <td>15,600 kg</td>
+      <td>LEO</td>
+      <td>SpaceX</td>
+      <td>Success\n</td>
+      <td>F9 B5B1051.10</td>
+      <td>Success</td>
+      <td>9 May 2021</td>
+      <td>06:42</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>118</td>
+      <td>KSC</td>
+      <td>Starlink</td>
+      <td>~14,000 kg</td>
+      <td>LEO</td>
+      <td>SpaceX Capella Space and Tyvak</td>
+      <td>Success\n</td>
+      <td>F9 B5B1058.8</td>
+      <td>Success</td>
+      <td>15 May 2021</td>
+      <td>22:56</td>
+    </tr>
+    <tr>
+      <th>118</th>
+      <td>119</td>
+      <td>CCSFS</td>
+      <td>Starlink</td>
+      <td>15,600 kg</td>
+      <td>LEO</td>
+      <td>SpaceX</td>
+      <td>Success\n</td>
+      <td>F9 B5B1063.2</td>
+      <td>Success</td>
+      <td>26 May 2021</td>
+      <td>18:59</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>120</td>
+      <td>KSC</td>
+      <td>SpaceX CRS-22</td>
+      <td>3,328 kg</td>
+      <td>LEO</td>
+      <td>NASA (CRS)</td>
+      <td>Success\n</td>
+      <td>F9 B5B1067.1</td>
+      <td>Success</td>
+      <td>3 June 2021</td>
+      <td>17:29</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>121</td>
+      <td>CCSFS</td>
+      <td>SXM-8</td>
+      <td>7,000 kg</td>
+      <td>GTO</td>
+      <td>Sirius XM</td>
+      <td>Success\n</td>
+      <td>F9 B5</td>
+      <td>Success</td>
+      <td>6 June 2021</td>
+      <td>04:26</td>
+    </tr>
+  </tbody>
+</table>
+<p>121 rows × 11 columns</p>
+</div>
+</div>
+</div>
+<p>We can now export it to a <b>CSV</b> for the next section, but to make the answers consistent and in case you have difficulties finishing this lab.</p>
+<p>Following labs will be using a provided dataset to make each lab independent.</p>
+<p><code>df.to_csv(‘spacex_web_scraped.csv’, index=False)</code></p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'spacex_web_scraped.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="authors" class="level2">
+<h2 class="anchored" data-anchor-id="authors">Authors</h2>
+<p><a href="https://www.linkedin.com/in/yan-luo-96288783/?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01">Yan Luo</a></p>
+<p><a href="https://www.linkedin.com/in/nayefaboutayoun/?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01">Nayef Abou Tayoun</a></p>
+</section>
+<section id="change-log" class="level2">
+<h2 class="anchored" data-anchor-id="change-log">Change Log</h2>
+<table class="table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Date (YYYY-MM-DD)</th>
+<th>Version</th>
+<th>Changed By</th>
+<th>Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2021-06-09</td>
+<td>1.0</td>
+<td>Yan Luo</td>
+<td>Tasks updates</td>
+</tr>
+<tr class="even">
+<td>2020-11-10</td>
+<td>1.0</td>
+<td>Nayef</td>
+<td>Created the initial version</td>
+</tr>
+</tbody>
+</table>
+<p>Copyright © 2021 IBM Corporation. All rights reserved.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2022 Prashant Kamble. Made with ❤️ and <a href="https://quarto.org/">Quarto</a></div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/prashant-kamble272">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Prashantsk45">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/prashant-kamble272">
+      <i class="bi bi-award-fill" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

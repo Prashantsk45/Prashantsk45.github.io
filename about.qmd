@@ -1,0 +1,60 @@
+---
+title: "About Me"
+pagetitle: "About Me"
+image: images/profile.png
+comments: false
+about:
+  template: jolla
+  image-width: 15em
+  image-shape: round
+  id: hero-heading
+---
+
+::: {#hero-heading}
+
+## Hello! I'm Prashant Kamble.
+
+I am an Aerospace Engineering graduate and R&D researcher specializing in **Aircraft Design**, **Computational Fluid Dynamics (CFD)**, and **Finite Element Analysis (FEA)**. I have a deep passion for combining aerospace engineering domain expertise with modern data science practices (Python, SQL, Machine Learning) to build safer, more efficient flight structures and propulsion systems.
+
+### 🏢 Work Experience
+
+* **Aircraft Design Intern** | *Jet Aerospace (Palakkad, India)* | *Sep 2025 – Mar 2026*
+  * Optimized UAV structures in CATIA and SolidWorks, improving lift-to-drag ratios by 8% across 5 distinct flight configurations.
+  * Conducted 15+ CFD (ANSYS Fluent) and FEA (ANSYS Mechanical) simulations to reduce structural stress concentrations under extreme loads by 12%.
+  * Saved 5% structural weight through systems integration of structural and electronic components in a 3-person engineering team.
+
+---
+
+### 🎓 Education
+
+* **Lovely Professional University** | *Punjab, India*
+  * **Bachelor of Technology (B.Tech) in Aerospace Engineering** *(Aug 2021 – May 2025)*  
+    *CGPA: 7.69/10*
+
+---
+
+### 📝 Publications
+
+* **CNT-Rubber Composites for Landing Gear** | *6th International Conference (RAFAS)* | *2025*
+  * Developed functionalized carbon nanotube (CNT) rubber composite shock disks, achieving a 25–30% tensile strength gain and 30% material durability improvement.
+* **Experimental inspection of behavior of additives on hybrid rocket propellant** | *2nd International Conference (ICAAE)* | *2025*
+  * Analyzed thermodynamic performance of 45+ propellant formulations containing NaBH4 and KBH4 additives, raising specific impulse by 10% (mapped using NASA CEA and MATLAB).
+
+---
+
+### 🏅 Certifications & Badges
+
+* **Accredited STK Grandmaster** | *ANSYS (2024)*
+* **Certified SolidWorks Professional (CSWP)** | *Dassault Systemes (2024)*
+* **Licensed 3DEXPERIENCE Mechanical Designer - Associate** | *Dassault Systemes (2024)*
+* **IBM Data Science Professional Certificate** | *Coursera (2022)*
+
+---
+
+### 📬 Contact Info
+
+* **Email:** [prashantsk.272@gmail.com](mailto:prashantsk.272@gmail.com)
+* **LinkedIn:** [linkedin.com/in/prashant-kamble272](https://linkedin.com/in/prashant-kamble272)
+* **GitHub:** [github.com/Prashantsk45](https://github.com/Prashantsk45)
+
+:::

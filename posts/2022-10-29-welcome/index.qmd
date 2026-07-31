@@ -1,0 +1,11 @@
+---
+title: Welcome
+categories:
+  - Quarto
+  - GitHub Pages
+author: Prashant Kamble
+date: "10/29/2022"
+---
+This is the first post in my blog, I am continuously improving it. 
+
+This blog is made with [Quarto](https://quarto.org/), a great open-source, scientific and technical publishing system. This site is hosted by [GitHub Pages.](https://pages.github.com/.)

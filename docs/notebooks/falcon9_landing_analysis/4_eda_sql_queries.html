@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Prashant – 4_eda_sql_queries</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Prashant</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html">Projects</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">About Me</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/prashant-kamble272"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Prashantsk45"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/prashant-kamble272"><i class="bi bi-award-fill" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#overview-of-the-dataset" id="toc-overview-of-the-dataset" class="nav-link" data-scroll-target="#overview-of-the-dataset">Overview of the DataSet</a>
+  <ul class="collapse">
+  <li><a href="#download-the-datasets" id="toc-download-the-datasets" class="nav-link" data-scroll-target="#download-the-datasets">Download the datasets</a></li>
+  <li><a href="#store-the-dataset-in-database-table" id="toc-store-the-dataset-in-database-table" class="nav-link" data-scroll-target="#store-the-dataset-in-database-table">Store the dataset in database table</a></li>
+  <li><a href="#connect-to-the-database" id="toc-connect-to-the-database" class="nav-link" data-scroll-target="#connect-to-the-database">Connect to the database</a></li>
+  </ul></li>
+  <li><a href="#tasks" id="toc-tasks" class="nav-link" data-scroll-target="#tasks">Tasks</a>
+  <ul class="collapse">
+  <li><a href="#task-1" id="toc-task-1" class="nav-link" data-scroll-target="#task-1">Task 1</a></li>
+  <li><a href="#task-2" id="toc-task-2" class="nav-link" data-scroll-target="#task-2">Task 2</a></li>
+  <li><a href="#task-3" id="toc-task-3" class="nav-link" data-scroll-target="#task-3">Task 3</a></li>
+  <li><a href="#task-4" id="toc-task-4" class="nav-link" data-scroll-target="#task-4">Task 4</a></li>
+  <li><a href="#task-5" id="toc-task-5" class="nav-link" data-scroll-target="#task-5">Task 5</a></li>
+  <li><a href="#task-6" id="toc-task-6" class="nav-link" data-scroll-target="#task-6">Task 6</a></li>
+  <li><a href="#task-7" id="toc-task-7" class="nav-link" data-scroll-target="#task-7">Task 7</a></li>
+  <li><a href="#task-8" id="toc-task-8" class="nav-link" data-scroll-target="#task-8">Task 8</a></li>
+  <li><a href="#task-9" id="toc-task-9" class="nav-link" data-scroll-target="#task-9">Task 9</a></li>
+  <li><a href="#task-10" id="toc-task-10" class="nav-link" data-scroll-target="#task-10">Task 10</a></li>
+  <li><a href="#reference-links" id="toc-reference-links" class="nav-link" data-scroll-target="#reference-links">Reference Links</a></li>
+  </ul></li>
+  <li><a href="#authors" id="toc-authors" class="nav-link" data-scroll-target="#authors">Author(s)</a></li>
+  <li><a href="#other-contributors" id="toc-other-contributors" class="nav-link" data-scroll-target="#other-contributors">Other Contributors</a></li>
+  <li><a href="#change-log" id="toc-change-log" class="nav-link" data-scroll-target="#change-log">Change log</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<center>
+<img src="https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/Logos/organization_logo/organization_logo.png" width="300" alt="cognitiveclass.ai logo">
+</center>
+<h1 align="center">
+<font size="5">Assignment: SQL Notebook for Peer Assignment</font>
+</h1>
+<p>Estimated time needed: <strong>60</strong> minutes.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Using this Python notebook you will:</p>
+<ol type="1">
+<li>Understand the Spacex DataSet</li>
+<li>Load the dataset into the corresponding table in a Db2 database</li>
+<li>Execute SQL queries to answer assignment questions</li>
+</ol>
+</section>
+<section id="overview-of-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="overview-of-the-dataset">Overview of the DataSet</h2>
+<p>SpaceX has gained worldwide attention for a series of historic milestones.</p>
+<p>It is the only private company ever to return a spacecraft from low-earth orbit, which it first accomplished in December 2010. SpaceX advertises Falcon 9 rocket launches on its website with a cost of 62 million dollars wheras other providers cost upward of 165 million dollars each, much of the savings is because Space X can reuse the first stage.</p>
+<p>Therefore if we can determine if the first stage will land, we can determine the cost of a launch.</p>
+<p>This information can be used if an alternate company wants to bid against SpaceX for a rocket launch.</p>
+<p>This dataset includes a record for each payload carried during a SpaceX mission into outer space.</p>
+<section id="download-the-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="download-the-datasets">Download the datasets</h3>
+<p>This assignment requires you to load the spacex dataset.</p>
+<p>In many cases the dataset to be analyzed is available as a .CSV (comma separated values) file, perhaps on the internet. Click on the link below to download and save the dataset (.CSV file):</p>
+<p><a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_2/data/Spacex.csv?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01" target="_blank">Spacex DataSet</a></p>
+</section>
+<section id="store-the-dataset-in-database-table" class="level3">
+<h3 class="anchored" data-anchor-id="store-the-dataset-in-database-table">Store the dataset in database table</h3>
+<p><strong>it is highly recommended to manually load the table using the database console LOAD tool in DB2</strong>.</p>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_2/images/spacexload.png"></p>
+<p>Now open the Db2 console, open the LOAD tool, Select / Drag the .CSV file for the dataset, Next create a New Table, and then follow the steps on-screen instructions to load the data. Name the new table as follows:</p>
+<p><strong>SPACEXDATASET</strong></p>
+<p><strong>Follow these steps while using old DB2 UI which is having Open Console Screen</strong></p>
+<p><strong>Note:While loading Spacex dataset, ensure that detect datatypes is disabled. Later click on the pencil icon(edit option).</strong></p>
+<ol type="1">
+<li><p>Change the Date Format by manually typing DD-MM-YYYY and timestamp format as DD-MM-YYYY HH:MM:SS.</p>
+<p>Here you should place the cursor at Date field and manually type as DD-MM-YYYY.</p></li>
+<li><p>Change the PAYLOAD_MASS__KG_ datatype to INTEGER.</p></li>
+</ol>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_2/images/spacexload2.png"></p>
+<p><strong>Changes to be considered when having DB2 instance with the new UI having Go to UI screen</strong></p>
+<ul>
+<li><p>Refer to this insruction in this <a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Labs_Coursera_V5/labs/Lab%20-%20Sign%20up%20for%20IBM%20Cloud%20-%20Create%20Db2%20service%20instance%20-%20Get%20started%20with%20the%20Db2%20console/instructional-labs.md.html?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01">link</a> for viewing the new Go to UI screen.</p></li>
+<li><p>Later click on <strong>Data link(below SQL)</strong> in the Go to UI screen and click on <strong>Load Data</strong> tab.</p></li>
+<li><p>Later browse for the downloaded spacex file.</p></li>
+</ul>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_2/images/browsefile.png" width="800"></p>
+<ul>
+<li>Once done select the schema andload the file.</li>
+</ul>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_2/images/spacexload3.png" width="800"></p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install sqlalchemy<span class="op">==</span><span class="fl">1.3.9</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install ibm_db_sa</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install ipython<span class="op">-</span>sql</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Collecting sqlalchemy==1.3.9
+  Downloading SQLAlchemy-1.3.9.tar.gz (6.0 MB)
+     |████████████████████████████████| 6.0 MB 20.2 MB/s            
+  Preparing metadata (setup.py) ... done
+Building wheels for collected packages: sqlalchemy
+  Building wheel for sqlalchemy (setup.py) ... done
+  Created wheel for sqlalchemy: filename=SQLAlchemy-1.3.9-cp37-cp37m-linux_x86_64.whl size=1159176 sha256=acad72667f5306c9b409f9c5e5a49977a0bdf8fa39efafee2a3fade9f46aee84
+  Stored in directory: /home/jupyterlab/.cache/pip/wheels/03/71/13/010faf12246f72dc76b4150e6e599d13a85b4435e06fb9e51f
+Successfully built sqlalchemy
+Installing collected packages: sqlalchemy
+  Attempting uninstall: sqlalchemy
+    Found existing installation: SQLAlchemy 1.3.24
+    Uninstalling SQLAlchemy-1.3.24:
+      Successfully uninstalled SQLAlchemy-1.3.24
+Successfully installed sqlalchemy-1.3.9
+Requirement already satisfied: ibm_db_sa in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (0.3.3)
+Requirement already satisfied: sqlalchemy&gt;=0.7.3 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ibm_db_sa) (1.3.9)
+Requirement already satisfied: ipython-sql in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (0.3.9)
+Requirement already satisfied: ipython&gt;=1.0 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython-sql) (7.30.0)
+Requirement already satisfied: ipython-genutils&gt;=0.1.0 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython-sql) (0.2.0)
+Requirement already satisfied: prettytable in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython-sql) (2.4.0)
+Requirement already satisfied: six in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython-sql) (1.16.0)
+Requirement already satisfied: sqlalchemy&gt;=0.6.7 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython-sql) (1.3.9)
+Requirement already satisfied: sqlparse in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython-sql) (0.4.2)
+Requirement already satisfied: jedi&gt;=0.16 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (0.18.1)
+Requirement already satisfied: prompt-toolkit!=3.0.0,!=3.0.1,&lt;3.1.0,&gt;=2.0.0 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (3.0.22)
+Requirement already satisfied: pexpect&gt;4.3 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (4.8.0)
+Requirement already satisfied: pickleshare in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (0.7.5)
+Requirement already satisfied: traitlets&gt;=4.2 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (5.1.1)
+Requirement already satisfied: backcall in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (0.2.0)
+Requirement already satisfied: decorator in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (5.1.0)
+Requirement already satisfied: pygments in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (2.10.0)
+Requirement already satisfied: setuptools&gt;=18.5 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (59.4.0)
+Requirement already satisfied: matplotlib-inline in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from ipython&gt;=1.0-&gt;ipython-sql) (0.1.3)
+Requirement already satisfied: wcwidth in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from prettytable-&gt;ipython-sql) (0.2.5)
+Requirement already satisfied: importlib-metadata in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from prettytable-&gt;ipython-sql) (4.8.2)
+Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.0 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from jedi&gt;=0.16-&gt;ipython&gt;=1.0-&gt;ipython-sql) (0.8.3)
+Requirement already satisfied: ptyprocess&gt;=0.5 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from pexpect&gt;4.3-&gt;ipython&gt;=1.0-&gt;ipython-sql) (0.7.0)
+Requirement already satisfied: typing-extensions&gt;=3.6.4 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from importlib-metadata-&gt;prettytable-&gt;ipython-sql) (4.0.1)
+Requirement already satisfied: zipp&gt;=0.5 in /home/jupyterlab/conda/envs/python/lib/python3.7/site-packages (from importlib-metadata-&gt;prettytable-&gt;ipython-sql) (3.6.0)</code></pre>
+</div>
+</div>
+</section>
+<section id="connect-to-the-database" class="level3">
+<h3 class="anchored" data-anchor-id="connect-to-the-database">Connect to the database</h3>
+<p>Let us first load the SQL extension and establish a connection with the database</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext sql</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>DB2 magic in case of old UI service credentials.</strong></p>
+<p>In the next cell enter your db2 connection string. Recall you created Service Credentials for your Db2 instance before. From the <strong>uri</strong> field of your Db2 service credentials copy everything after db2:// (except the double quote at the end) and paste it in the cell below after ibm_db_sa://</p>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/FinalModule_edX/images/URI.jpg"></p>
+<p>in the following format</p>
+<p><strong>%sql ibm_db_sa://my-username:my-password@my-hostname:my-port/my-db-name</strong></p>
+<p><strong>DB2 magic in case of new UI service credentials.</strong></p>
+<p><img src="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DS0321EN-SkillsNetwork/labs/module_2/images/servicecredentials.png" width="600"></p>
+<ul>
+<li><p>Use the following format.</p></li>
+<li><p>Add security=SSL at the end</p></li>
+</ul>
+<p><strong>%sql ibm_db_sa://my-username:my-password@my-hostname:my-port/my-db-name?security=SSL</strong></p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>my_username <span class="op">=</span> <span class="st">"ycy00214"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>my_password <span class="op">=</span> <span class="st">"CbgYvxhuAKs0BAQ4"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>my_hostname <span class="op">=</span> <span class="st">"3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#my_port = 31498</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>my_db_name <span class="op">=</span> <span class="st">"bludb"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>my_hostname</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>'3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql ibm_db_sa:<span class="op">//</span>ycy00214:CbgYvxhuAKs0BAQ4<span class="op">@</span><span class="fl">3883e7</span><span class="er">e4</span><span class="op">-</span><span class="dv">18</span><span class="er">f5</span><span class="op">-</span><span class="dv">4</span><span class="er">afe</span><span class="op">-</span>be8c<span class="op">-</span>fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:<span class="dv">31498</span><span class="op">/</span>bludb?security<span class="op">=</span>SSL</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>'Connected: ycy00214@bludb'</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT <span class="op">*</span> FROM SPACEXTBL LIMIT <span class="dv">5</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+
+<table>
+    <thead>
+        <tr>
+            <th>DATE</th>
+            <th>time__utc_</th>
+            <th>booster_version</th>
+            <th>launch_site</th>
+            <th>payload</th>
+            <th>payload_mass__kg_</th>
+            <th>orbit</th>
+            <th>customer</th>
+            <th>mission_outcome</th>
+            <th>landing_outcome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2010-06-04</td>
+            <td>18:45:00</td>
+            <td>F9 v1.0  B0003</td>
+            <td>CCAFS LC-40</td>
+            <td>Dragon Spacecraft Qualification Unit</td>
+            <td>0</td>
+            <td>LEO</td>
+            <td>SpaceX</td>
+            <td>Success</td>
+            <td>Failure (parachute)</td>
+        </tr>
+        <tr>
+            <td>2010-12-08</td>
+            <td>15:43:00</td>
+            <td>F9 v1.0  B0004</td>
+            <td>CCAFS LC-40</td>
+            <td>Dragon demo flight C1, two CubeSats, barrel of Brouere cheese</td>
+            <td>0</td>
+            <td>LEO (ISS)</td>
+            <td>NASA (COTS) NRO</td>
+            <td>Success</td>
+            <td>Failure (parachute)</td>
+        </tr>
+        <tr>
+            <td>2012-05-22</td>
+            <td>07:44:00</td>
+            <td>F9 v1.0  B0005</td>
+            <td>CCAFS LC-40</td>
+            <td>Dragon demo flight C2</td>
+            <td>525</td>
+            <td>LEO (ISS)</td>
+            <td>NASA (COTS)</td>
+            <td>Success</td>
+            <td>No attempt</td>
+        </tr>
+        <tr>
+            <td>2012-10-08</td>
+            <td>00:35:00</td>
+            <td>F9 v1.0  B0006</td>
+            <td>CCAFS LC-40</td>
+            <td>SpaceX CRS-1</td>
+            <td>500</td>
+            <td>LEO (ISS)</td>
+            <td>NASA (CRS)</td>
+            <td>Success</td>
+            <td>No attempt</td>
+        </tr>
+        <tr>
+            <td>2013-03-01</td>
+            <td>15:10:00</td>
+            <td>F9 v1.0  B0007</td>
+            <td>CCAFS LC-40</td>
+            <td>SpaceX CRS-2</td>
+            <td>677</td>
+            <td>LEO (ISS)</td>
+            <td>NASA (CRS)</td>
+            <td>Success</td>
+            <td>No attempt</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="tasks" class="level2">
+<h2 class="anchored" data-anchor-id="tasks">Tasks</h2>
+<p>Now write and execute SQL queries to solve the assignment tasks.</p>
+<section id="task-1" class="level3">
+<h3 class="anchored" data-anchor-id="task-1">Task 1</h3>
+<section id="display-the-names-of-the-unique-launch-sites-in-the-space-mission" class="level5">
+<h5 class="anchored" data-anchor-id="display-the-names-of-the-unique-launch-sites-in-the-space-mission">Display the names of the unique launch sites in the space mission</h5>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT DISTINCT(launch_site) FROM SPACEXTBL<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+
+<table>
+    <thead>
+        <tr>
+            <th>launch_site</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>CCAFS LC-40</td>
+        </tr>
+        <tr>
+            <td>CCAFS SLC-40</td>
+        </tr>
+        <tr>
+            <td>KSC LC-39A</td>
+        </tr>
+        <tr>
+            <td>VAFB SLC-4E</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="task-2" class="level3">
+<h3 class="anchored" data-anchor-id="task-2">Task 2</h3>
+<section id="display-5-records-where-launch-sites-begin-with-the-string-cca" class="level5">
+<h5 class="anchored" data-anchor-id="display-5-records-where-launch-sites-begin-with-the-string-cca">Display 5 records where launch sites begin with the string ‘CCA’</h5>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT <span class="op">*</span> FROM SPACEXTBL WHERE launch_site LIKE <span class="st">'CCA%'</span> LIMIT <span class="dv">5</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+
+<table>
+    <thead>
+        <tr>
+            <th>DATE</th>
+            <th>time__utc_</th>
+            <th>booster_version</th>
+            <th>launch_site</th>
+            <th>payload</th>
+            <th>payload_mass__kg_</th>
+            <th>orbit</th>
+            <th>customer</th>
+            <th>mission_outcome</th>
+            <th>landing_outcome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2010-06-04</td>
+            <td>18:45:00</td>
+            <td>F9 v1.0  B0003</td>
+            <td>CCAFS LC-40</td>
+            <td>Dragon Spacecraft Qualification Unit</td>
+            <td>0</td>
+            <td>LEO</td>
+            <td>SpaceX</td>
+            <td>Success</td>
+            <td>Failure (parachute)</td>
+        </tr>
+        <tr>
+            <td>2010-12-08</td>
+            <td>15:43:00</td>
+            <td>F9 v1.0  B0004</td>
+            <td>CCAFS LC-40</td>
+            <td>Dragon demo flight C1, two CubeSats, barrel of Brouere cheese</td>
+            <td>0</td>
+            <td>LEO (ISS)</td>
+            <td>NASA (COTS) NRO</td>
+            <td>Success</td>
+            <td>Failure (parachute)</td>
+        </tr>
+        <tr>
+            <td>2012-05-22</td>
+            <td>07:44:00</td>
+            <td>F9 v1.0  B0005</td>
+            <td>CCAFS LC-40</td>
+            <td>Dragon demo flight C2</td>
+            <td>525</td>
+            <td>LEO (ISS)</td>
+            <td>NASA (COTS)</td>
+            <td>Success</td>
+            <td>No attempt</td>
+        </tr>
+        <tr>
+            <td>2012-10-08</td>
+            <td>00:35:00</td>
+            <td>F9 v1.0  B0006</td>
+            <td>CCAFS LC-40</td>
+            <td>SpaceX CRS-1</td>
+            <td>500</td>
+            <td>LEO (ISS)</td>
+            <td>NASA (CRS)</td>
+            <td>Success</td>
+            <td>No attempt</td>
+        </tr>
+        <tr>
+            <td>2013-03-01</td>
+            <td>15:10:00</td>
+            <td>F9 v1.0  B0007</td>
+            <td>CCAFS LC-40</td>
+            <td>SpaceX CRS-2</td>
+            <td>677</td>
+            <td>LEO (ISS)</td>
+            <td>NASA (CRS)</td>
+            <td>Success</td>
+            <td>No attempt</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="task-3" class="level3">
+<h3 class="anchored" data-anchor-id="task-3">Task 3</h3>
+<section id="display-the-total-payload-mass-carried-by-boosters-launched-by-nasa-crs" class="level5">
+<h5 class="anchored" data-anchor-id="display-the-total-payload-mass-carried-by-boosters-launched-by-nasa-crs">Display the total payload mass carried by boosters launched by NASA (CRS)</h5>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT SUM(payload_mass__kg_) AS TOTAL_PAYLOAD_MASS FROM SPACEXTBL WHERE customer<span class="op">=</span><span class="st">'NASA (CRS)'</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+
+<table>
+    <thead>
+        <tr>
+            <th>total_payload_mass</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>45596</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="task-4" class="level3">
+<h3 class="anchored" data-anchor-id="task-4">Task 4</h3>
+<section id="display-average-payload-mass-carried-by-booster-version-f9-v1.1" class="level5">
+<h5 class="anchored" data-anchor-id="display-average-payload-mass-carried-by-booster-version-f9-v1.1">Display average payload mass carried by booster version F9 v1.1</h5>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT AVG(payload_mass__kg_) AS AVG_PAYLOAD_MASS FROM SPACEXTBL WHERE booster_version<span class="op">=</span><span class="st">'F9 v1.1'</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+
+<table>
+    <thead>
+        <tr>
+            <th>avg_payload_mass</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2928</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="task-5" class="level3">
+<h3 class="anchored" data-anchor-id="task-5">Task 5</h3>
+<section id="list-the-date-when-the-first-successful-landing-outcome-in-ground-pad-was-acheived." class="level5">
+<h5 class="anchored" data-anchor-id="list-the-date-when-the-first-successful-landing-outcome-in-ground-pad-was-acheived.">List the date when the first successful landing outcome in ground pad was acheived.</h5>
+<p><em>Hint:Use min function</em></p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT MIN(DATE) AS first_successful_landing FROM SPACEXTBL WHERE (landing_outcome)<span class="op">=</span><span class="st">'Success (ground pad)'</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+
+<table>
+    <thead>
+        <tr>
+            <th>first_successful_landing</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2015-12-22</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="task-6" class="level3">
+<h3 class="anchored" data-anchor-id="task-6">Task 6</h3>
+<section id="list-the-names-of-the-boosters-which-have-success-in-drone-ship-and-have-payload-mass-greater-than-4000-but-less-than-6000" class="level5">
+<h5 class="anchored" data-anchor-id="list-the-names-of-the-boosters-which-have-success-in-drone-ship-and-have-payload-mass-greater-than-4000-but-less-than-6000">List the names of the boosters which have success in drone ship and have payload mass greater than 4000 but less than 6000</h5>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT DISTINCT(landing_outcome) FROM SPACEXTBL<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+
+<table>
+    <thead>
+        <tr>
+            <th>landing_outcome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Controlled (ocean)</td>
+        </tr>
+        <tr>
+            <td>Failure</td>
+        </tr>
+        <tr>
+            <td>Failure (drone ship)</td>
+        </tr>
+        <tr>
+            <td>Failure (parachute)</td>
+        </tr>
+        <tr>
+            <td>No attempt</td>
+        </tr>
+        <tr>
+            <td>Precluded (drone ship)</td>
+        </tr>
+        <tr>
+            <td>Success</td>
+        </tr>
+        <tr>
+            <td>Success (drone ship)</td>
+        </tr>
+        <tr>
+            <td>Success (ground pad)</td>
+        </tr>
+        <tr>
+            <td>Uncontrolled (ocean)</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT booster_version, payload_mass__kg_, landing_outcome FROM SPACEXTBL <span class="op">\</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>        WHERE landing_outcome<span class="op">=</span><span class="st">'Success (drone ship)'</span> AND (payload_mass__kg_ BETWEEN <span class="dv">4000</span> AND <span class="dv">6000</span>) <span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+
+<table>
+    <thead>
+        <tr>
+            <th>booster_version</th>
+            <th>payload_mass__kg_</th>
+            <th>landing_outcome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>F9 FT B1022</td>
+            <td>4696</td>
+            <td>Success (drone ship)</td>
+        </tr>
+        <tr>
+            <td>F9 FT B1026</td>
+            <td>4600</td>
+            <td>Success (drone ship)</td>
+        </tr>
+        <tr>
+            <td>F9 FT  B1021.2</td>
+            <td>5300</td>
+            <td>Success (drone ship)</td>
+        </tr>
+        <tr>
+            <td>F9 FT  B1031.2</td>
+            <td>5200</td>
+            <td>Success (drone ship)</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="task-7" class="level3">
+<h3 class="anchored" data-anchor-id="task-7">Task 7</h3>
+<section id="list-the-total-number-of-successful-and-failure-mission-outcomes" class="level5">
+<h5 class="anchored" data-anchor-id="list-the-total-number-of-successful-and-failure-mission-outcomes">List the total number of successful and failure mission outcomes</h5>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT DISTINCT(mission_outcome) FROM SPACEXTBL<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+
+<table>
+    <thead>
+        <tr>
+            <th>mission_outcome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Failure (in flight)</td>
+        </tr>
+        <tr>
+            <td>Success</td>
+        </tr>
+        <tr>
+            <td>Success (payload status unclear)</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT mission_outcome, COUNT(mission_outcome) AS TOTAL FROM SPACEXTBL GROUP BY mission_outcome<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+
+<table>
+    <thead>
+        <tr>
+            <th>mission_outcome</th>
+            <th>total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Failure (in flight)</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Success</td>
+            <td>99</td>
+        </tr>
+        <tr>
+            <td>Success (payload status unclear)</td>
+            <td>1</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="task-8" class="level3">
+<h3 class="anchored" data-anchor-id="task-8">Task 8</h3>
+<section id="list-the-names-of-the-booster_versions-which-have-carried-the-maximum-payload-mass.-use-a-subquery" class="level5">
+<h5 class="anchored" data-anchor-id="list-the-names-of-the-booster_versions-which-have-carried-the-maximum-payload-mass.-use-a-subquery">List the names of the booster_versions which have carried the maximum payload mass. Use a subquery</h5>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT MAX(payload_mass__kg_) FROM SPACEXTBL<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+
+<table>
+    <thead>
+        <tr>
+            <th>1</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>15600</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT DISTINCT(booster_version), (SELECT MAX(payload_mass__kg_) AS <span class="st">"maximum_payload_mass"</span> FROM SPACEXTBL) FROM SPACEXTBL LIMIT <span class="dv">5</span><span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+
+<table>
+    <thead>
+        <tr>
+            <th>booster_version</th>
+            <th>maximum_payload_mass</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>F9 B4  B1039.2</td>
+            <td>15600</td>
+        </tr>
+        <tr>
+            <td>F9 B4  B1040.2</td>
+            <td>15600</td>
+        </tr>
+        <tr>
+            <td>F9 B4  B1041.2</td>
+            <td>15600</td>
+        </tr>
+        <tr>
+            <td>F9 B4  B1043.2</td>
+            <td>15600</td>
+        </tr>
+        <tr>
+            <td>F9 B4 B1039.1</td>
+            <td>15600</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="task-9" class="level3">
+<h3 class="anchored" data-anchor-id="task-9">Task 9</h3>
+<section id="list-the-failed-landing_outcomes-in-drone-ship-their-booster-versions-and-launch-site-names-for-in-year-2015" class="level5">
+<h5 class="anchored" data-anchor-id="list-the-failed-landing_outcomes-in-drone-ship-their-booster-versions-and-launch-site-names-for-in-year-2015">List the failed landing_outcomes in drone ship, their booster versions, and launch site names for in year 2015</h5>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT landing_outcome, booster_version, launch_site, DATE FROM SPACEXTBL WHERE landing_outcome LIKE <span class="st">'</span><span class="sc">%F</span><span class="st">ailure (drone ship)%'</span> AND (DATE LIKE <span class="st">'2015%'</span>) <span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+
+<table>
+    <thead>
+        <tr>
+            <th>landing_outcome</th>
+            <th>booster_version</th>
+            <th>launch_site</th>
+            <th>DATE</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Failure (drone ship)</td>
+            <td>F9 v1.1 B1012</td>
+            <td>CCAFS LC-40</td>
+            <td>2015-01-10</td>
+        </tr>
+        <tr>
+            <td>Failure (drone ship)</td>
+            <td>F9 v1.1 B1015</td>
+            <td>CCAFS LC-40</td>
+            <td>2015-04-14</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="task-10" class="level3">
+<h3 class="anchored" data-anchor-id="task-10">Task 10</h3>
+<section id="rank-the-count-of-landing-outcomes-such-as-failure-drone-ship-or-success-ground-pad-between-the-date-2010-06-04-and-2017-03-20-in-descending-order" class="level5">
+<h5 class="anchored" data-anchor-id="rank-the-count-of-landing-outcomes-such-as-failure-drone-ship-or-success-ground-pad-between-the-date-2010-06-04-and-2017-03-20-in-descending-order">Rank the count of landing outcomes (such as Failure (drone ship) or Success (ground pad)) between the date 2010-06-04 and 2017-03-20, in descending order</h5>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT DISTINCT(landing_outcome) FROM SPACEXTBL<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+
+<table>
+    <thead>
+        <tr>
+            <th>landing_outcome</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Controlled (ocean)</td>
+        </tr>
+        <tr>
+            <td>Failure</td>
+        </tr>
+        <tr>
+            <td>Failure (drone ship)</td>
+        </tr>
+        <tr>
+            <td>Failure (parachute)</td>
+        </tr>
+        <tr>
+            <td>No attempt</td>
+        </tr>
+        <tr>
+            <td>Precluded (drone ship)</td>
+        </tr>
+        <tr>
+            <td>Success</td>
+        </tr>
+        <tr>
+            <td>Success (drone ship)</td>
+        </tr>
+        <tr>
+            <td>Success (ground pad)</td>
+        </tr>
+        <tr>
+            <td>Uncontrolled (ocean)</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>sql SELECT landing_outcome, COUNT(landing_outcome) AS <span class="st">"total"</span> FROM SPACEXTBL WHERE (DATE BETWEEN <span class="st">'2010-06-04'</span> AND <span class="st">'2017-03-20'</span>) GROUP BY landing_outcome ORDER BY <span class="st">"total"</span> DESC<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> * ibm_db_sa://ycy00214:***@3883e7e4-18f5-4afe-be8c-fa31c41761d2.bs2io90l08kqb1od8lcg.databases.appdomain.cloud:31498/bludb
+Done.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+
+<table>
+    <thead>
+        <tr>
+            <th>landing_outcome</th>
+            <th>total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>No attempt</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>Failure (drone ship)</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>Success (drone ship)</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>Controlled (ocean)</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>Success (ground pad)</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>Failure (parachute)</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>Uncontrolled (ocean)</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>Precluded (drone ship)</td>
+            <td>1</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="reference-links" class="level3">
+<h3 class="anchored" data-anchor-id="reference-links">Reference Links</h3>
+<ul>
+<li><p><a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Labs_Coursera_V5/labs/Lab%20-%20String%20Patterns%20-%20Sorting%20-%20Grouping/instructional-labs.md.html?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01&amp;origin=www.coursera.org">Hands-on Lab : String Patterns, Sorting and Grouping</a></p></li>
+<li><p><a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Labs_Coursera_V5/labs/Lab%20-%20Built-in%20functions%20/Hands-on_Lab__Built-in_Functions.md.html?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01&amp;origin=www.coursera.org">Hands-on Lab: Built-in functions</a></p></li>
+<li><p><a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Labs_Coursera_V5/labs/Lab%20-%20Sub-queries%20and%20Nested%20SELECTs%20/instructional-labs.md.html?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01&amp;origin=www.coursera.org">Hands-on Lab : Sub-queries and Nested SELECT Statements</a></p></li>
+<li><p><a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Module%205/DB0201EN-Week3-1-3-SQLmagic.ipynb?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01">Hands-on Tutorial: Accessing Databases with SQL magic</a></p></li>
+<li><p><a href="https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBMDeveloperSkillsNetwork-DB0201EN-SkillsNetwork/labs/Module%205/DB0201EN-Week3-1-4-Analyzing.ipynb?utm_medium=Exinfluencer&amp;utm_source=Exinfluencer&amp;utm_content=000026UJ&amp;utm_term=10006555&amp;utm_id=NA-SkillsNetwork-Channel-SkillsNetworkCoursesIBMDS0321ENSkillsNetwork26802033-2021-01-01">Hands-on Lab: Analyzing a real World Data Set</a></p></li>
+</ul>
+</section>
+</section>
+<section id="authors" class="level2">
+<h2 class="anchored" data-anchor-id="authors">Author(s)</h2>
+<h4 class="anchored">
+Lakshmi Holla
+</h4>
+</section>
+<section id="other-contributors" class="level2">
+<h2 class="anchored" data-anchor-id="other-contributors">Other Contributors</h2>
+<h4 class="anchored">
+Rav Ahuja
+</h4>
+</section>
+<section id="change-log" class="level2">
+<h2 class="anchored" data-anchor-id="change-log">Change log</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Version</th>
+<th>Changed by</th>
+<th>Change Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2021-10-12</td>
+<td>0.4</td>
+<td>Lakshmi Holla</td>
+<td>Changed markdown</td>
+</tr>
+<tr class="even">
+<td>2021-08-24</td>
+<td>0.3</td>
+<td>Lakshmi Holla</td>
+<td>Added library update</td>
+</tr>
+<tr class="odd">
+<td>2021-07-09</td>
+<td>0.2</td>
+<td>Lakshmi Holla</td>
+<td>Changes made in magic sql</td>
+</tr>
+<tr class="even">
+<td>2021-05-20</td>
+<td>0.1</td>
+<td>Lakshmi Holla</td>
+<td>Created Initial Version</td>
+</tr>
+</tbody>
+</table>
+##
+<h3 align="center" class="anchored">
+© IBM Corporation 2021. All rights reserved.
+</h3><h3 class="anchored">
+
+
+</h3></section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© 2022 Prashant Kamble. Made with ❤️ and <a href="https://quarto.org/">Quarto</a></div>   
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/prashant-kamble272">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Prashantsk45">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://linkedin.com/in/prashant-kamble272">
+      <i class="bi bi-award-fill" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+</body></html>

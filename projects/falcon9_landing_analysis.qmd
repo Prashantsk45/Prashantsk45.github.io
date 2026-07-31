@@ -1,0 +1,125 @@
+---
+title: "Winning Space Race with Data Science"
+format:
+  html:
+    toc: true
+categories:
+  - Data Science
+  - Coursera
+  - IBM
+  - Capstone Project
+date: "07/31/2025"
+image: "falcon9_landing_analysis/Slide1.PNG"
+image-alt: "Winning Space Race with Data Science"
+---
+
+Published: July 31, 2025
+
+### Executive Summary & Project Overview
+This technical showcase details the capstone project completed for the IBM Data Science Professional Certificate. Unlike standard high-level business presentations, this document provides a rigorous, end-to-end technical deep dive into the predictive analytics and machine learning pipelines developed for aerospace cost optimization.
+
+### Objective & Business Case
+In this project, I assume the strategic role of a Lead Data Scientist at an aerospace startup competing directly with SpaceX. The commercial space sector is highly cost-sensitive: while legacy launch providers price missions at upwards of $165 million, SpaceX advertises Falcon 9 launches at a highly disruptive $62 million.
+
+This pricing advantage is driven entirely by first-stage booster reuse. By predicting the landing success probability of the Falcon 9 first stage, we can accurately model launch economics. This predictive capability serves as a vital competitive tool, enabling alternative launch providers to bid strategically and optimize pricing models against SpaceX.
+
+:::{.column-page}
+![](falcon9_landing_analysis/Slide1.PNG)
+![](falcon9_landing_analysis/Slide2.PNG)
+
+## Executive Summary
+![](falcon9_landing_analysis/Slide3.PNG)
+
+## Introduction
+![](falcon9_landing_analysis/Slide4.PNG)
+
+## Methodology
+![](falcon9_landing_analysis/Slide5.PNG)
+![](falcon9_landing_analysis/Slide6.PNG)
+![](falcon9_landing_analysis/Slide7.PNG)
+![](falcon9_landing_analysis/Slide8.PNG)
+
+[Data collection API notebook](/notebooks/falcon9_landing_analysis/1_spacex_api_data_collection.ipynb)
+
+![](falcon9_landing_analysis/Slide9.PNG)
+
+[Web scraping notebook](/notebooks/falcon9_landing_analysis/2_spacex_web_scraping.ipynb)
+
+![](falcon9_landing_analysis/Slide10.PNG)
+
+[Data wrangling notebook](/notebooks/falcon9_landing_analysis/3_spacex_data_wrangling.ipynb)
+
+![](falcon9_landing_analysis/Slide11.PNG)
+
+[EDA with Visualization notebook](/notebooks/falcon9_landing_analysis/5_eda_data_visualization.ipynb)
+
+![](falcon9_landing_analysis/Slide12.PNG)
+![](falcon9_landing_analysis/Slide13.PNG)
+![](falcon9_landing_analysis/Slide14.PNG)
+
+[EDA with SQL notebook](/notebooks/falcon9_landing_analysis/4_eda_sql_queries.ipynb)
+
+![](falcon9_landing_analysis/Slide15.PNG)
+
+[Launch Sites Locations Analysis with Folium notebook](/notebooks/falcon9_landing_analysis/6_interactive_map_launch_locations.ipynb)
+
+![](falcon9_landing_analysis/Slide16.PNG)
+![](falcon9_landing_analysis/Slide17.PNG)
+
+[Interactive Dashboard with Ploty Dash](https://github.com/Prashantsk45/Prashantsk45.github.io/blob/main/notebooks/falcon9_landing_analysis/spacex_dash_app.py)
+
+![](falcon9_landing_analysis/Slide18.PNG)
+![](falcon9_landing_analysis/Slide19.PNG)
+
+[Machine Learning Prediction notebook](/notebooks/falcon9_landing_analysis/7_machine_learning_predictive_modeling.ipynb)
+
+![](falcon9_landing_analysis/Slide20.PNG)
+
+## Insights Drawn from EDA
+![](falcon9_landing_analysis/Slide21.PNG)
+![](falcon9_landing_analysis/Slide22.PNG)
+![](falcon9_landing_analysis/Slide23.PNG)
+![](falcon9_landing_analysis/Slide24.PNG)
+![](falcon9_landing_analysis/Slide25.PNG)
+![](falcon9_landing_analysis/Slide26.PNG)
+![](falcon9_landing_analysis/Slide27.PNG)
+![](falcon9_landing_analysis/Slide28.PNG)
+![](falcon9_landing_analysis/Slide29.PNG)
+![](falcon9_landing_analysis/Slide30.PNG)
+![](falcon9_landing_analysis/Slide31.PNG)
+![](falcon9_landing_analysis/Slide32.PNG)
+![](falcon9_landing_analysis/Slide33.PNG)
+![](falcon9_landing_analysis/Slide34.PNG)
+![](falcon9_landing_analysis/Slide35.PNG)
+![](falcon9_landing_analysis/Slide36.PNG)
+![](falcon9_landing_analysis/Slide37.PNG)
+
+## Launch Sites Proximities Analysis
+![](falcon9_landing_analysis/Slide38.PNG)
+![](falcon9_landing_analysis/Slide39.PNG)
+![](falcon9_landing_analysis/Slide40.PNG)
+![](falcon9_landing_analysis/Slide41.PNG)
+
+## Build a Dashboard with Plotly Dash
+![](falcon9_landing_analysis/Slide42.PNG)
+![](falcon9_landing_analysis/Slide43.PNG)
+![](falcon9_landing_analysis/Slide44.PNG)
+![](falcon9_landing_analysis/Slide45.PNG)
+![](falcon9_landing_analysis/Slide46.PNG)
+
+## Predictive Analysis (Classification)
+![](falcon9_landing_analysis/Slide47.PNG)
+![](falcon9_landing_analysis/Slide48.PNG)
+![](falcon9_landing_analysis/Slide49.PNG)
+
+## Conclusions
+![](falcon9_landing_analysis/Slide50.PNG)
+
+## Appendix
+![](falcon9_landing_analysis/Slide51.PNG)
+
+For notebooks, datasets and scripts, follow this GitHub repository link: 
+[Applied Data Science Capstone](https://github.com/Prashantsk45/Prashantsk45.github.io/tree/main/notebooks/falcon9_landing_analysis)
+
+![](falcon9_landing_analysis/Slide52.PNG)
+:::
